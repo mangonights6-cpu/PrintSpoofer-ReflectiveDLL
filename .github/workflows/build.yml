@@ -1,0 +1,26 @@
+name: Build PrintSpoofer Reflective DLL
+
+on:
+  workflow_dispatch: # This allows you to trigger the build manually
+
+jobs:
+  build:
+    runs-on: windows-latest # This provides a Windows VM with Visual Studio installed
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Build the Project
+      # Compiles the solution for 64-bit architecture in Release mode
+      run: msbuild PrintSpoofer.sln /p:Configuration=Release /p:Platform=x64
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: PrintSpoofer-Compiled
+        # The path where MSBuild drops the compiled DLL
+        path: x64/Release/PrintSpoofer.dll
