@@ -9,17 +9,18 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4 # <-- Updated to v4
 
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.1
+      uses: microsoft/setup-msbuild@v2 # <-- Updated to v2
 
     - name: Build the Project
       # Compiles the solution for 64-bit architecture in Release mode
+      # Note: Check if the file is just 'PrintSpoofer.sln' or inside a folder
       run: msbuild PrintSpoofer.sln /p:Configuration=Release /p:Platform=x64
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4 # <-- Updated to v4
       with:
         name: PrintSpoofer-Compiled
         # The path where MSBuild drops the compiled DLL
